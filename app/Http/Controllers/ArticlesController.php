@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateArticle;
+use App\Http\Requests\UpdateArticle;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use YuanChao\Editor\EndaEditor;
@@ -23,7 +24,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'asc')->paginate(10);
+        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
 
         foreach($articles as $k => $article)
         {
@@ -31,7 +32,7 @@ class ArticlesController extends Controller
 //
 //            // 去除html标签
 //            $content = strCut($content);
-            $articles[$k]->content = str_limit($article->content,300,'...');
+            $articles[$k]->content = strip_tags(str_limit($article->content,300,'...'));
         }
 
         return view('articles.index', compact('articles'));
@@ -71,7 +72,7 @@ class ArticlesController extends Controller
     public function show($id)
     {
         $article = Article::where('id',$id)->firstOrFail();
-        $article->content = EndaEditor::MarkDecode(htmlspecialchars($article->content));
+        $article->content = EndaEditor::MarkDecode(htmlspecialchars_decode($article->content));
         $article->increment('views_count');
         return view('articles.show', compact('article'));
     }
@@ -84,7 +85,9 @@ class ArticlesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $article = Article::where('id',$id)->firstOrFail();
+        $article->content = strip_tags(EndaEditor::MarkDecode(htmlspecialchars_decode($article->content)));
+       return view('articles.edit',compact('article'));
     }
 
     /**
@@ -94,9 +97,14 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateArticle $request, $id)
     {
-        //
+        $article = Article::where('id',$id)->firstOrFail();
+        $article->title = $request->get('title');
+        $article->content = EndaEditor::MarkDecode(htmlspecialchars_decode($request->get('content')));
+        $article->update();
+
+        return redirect()->route('articles.show',[$article->id]);
     }
 
     /**
@@ -107,6 +115,7 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Article::destroy($id);
+        return redirect()->route('articles.index');
     }
 }

@@ -84,8 +84,8 @@
 
                 <div class="links">
                     <a href="{{ url('/articles') }}">blog</a>
-                    <a href="https://laracasts.com">weibo</a>
-                    <a href="https://laravel-news.com">github</a>
+                    <a href="http://weibo.com/u/2642050113" target="_blank">weibo</a>
+                    <a href="https://github.com/lanatuss" target="_blank">github</a>
                     {{--<a href="https://forge.laravel.com">about me</a>--}}
                     {{--<a href="https://github.com/laravel/laravel">GitHub</a>--}}
                 </div>

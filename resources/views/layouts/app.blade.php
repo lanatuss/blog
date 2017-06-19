@@ -37,7 +37,8 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li class="active"><a href="{{ route('articles.index') }}">首页</a></li>
+                        {{--<li class=""><a href="{{ route('articles.index') }}">php</a></li>--}}
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -68,6 +69,7 @@
                             </li>
                         @endif
                     </ul>
+
                 </div>
             </div>
         </nav>

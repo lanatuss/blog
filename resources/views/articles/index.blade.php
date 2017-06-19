@@ -12,9 +12,18 @@
                                 {{ $article->content }}
                             </p>
                             <small class="utility-muted">发表于 {{ $article->created_at }}</small>
+                            @if (Auth::id() == 1)
+                            <button  class="btn btn-success" onclick=on({{$article->id}})>编辑</button>
+                            @endif
+                            </form>
                         </div>
                     </div>
                 @endforeach
                     {!! $articles->render() !!}
             </div>
 @endsection
+<script>
+function on(id){
+window.location.href='articles/'+id+'/edit';
+}
+</script>
