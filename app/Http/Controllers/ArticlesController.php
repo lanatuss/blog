@@ -86,7 +86,7 @@ class ArticlesController extends Controller
     public function edit($id)
     {
         $article = Article::where('id',$id)->firstOrFail();
-        $article->content = strip_tags(EndaEditor::MarkDecode(htmlspecialchars_decode($article->content)));
+        $article->content = strip_tags((htmlspecialchars_decode($article->content)));
        return view('articles.edit',compact('article'));
     }
 
