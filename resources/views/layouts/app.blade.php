@@ -85,7 +85,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
+@yield('js');
 <script>
+
     $(function () {
         var scrollHeight = document.body.scrollHeight;
         var row = $('#row').height();
